@@ -140,6 +140,10 @@ Routes and views for the flask application.
 Routes and views for the flask application.
 """
 
+"""
+Routes and views for the flask application.
+"""
+
 from datetime import datetime
 from flask import render_template, flash, redirect, request, session, url_for
 from werkzeug.urls import url_parse
@@ -221,7 +225,7 @@ def login():
 
     form = LoginForm()
 
-    # Normal Admin Login
+    # Admin Login
     if form.validate_on_submit():
 
         user = User.query.filter_by(username=form.username.data).first()
@@ -274,7 +278,7 @@ def authorized():
         result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
             request.args['code'],
             scopes=Config.SCOPE,
-            redirect_uri=url_for("authorized", _external=True)
+            redirect_uri="https://cmswebapp123-g6ababc4dvcnapgb.centralus-01.azurewebsites.net/getAToken"
         )
 
         if "error" in result:
@@ -342,8 +346,10 @@ def _build_msal_app(cache=None, authority=None):
 
 def _build_auth_url(authority=None, scopes=None, state=None):
 
+    redirect_uri = "https://cmswebapp123-g6ababc4dvcnapgb.centralus-01.azurewebsites.net/getAToken"
+
     return _build_msal_app(authority=authority).get_authorization_request_url(
         scopes,
         state=state,
-        redirect_uri=url_for("authorized", _external=True)
+        redirect_uri=redirect_uri
     )
