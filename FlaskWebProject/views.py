@@ -215,18 +215,7 @@ def post(id):
         imageSource=imageSourceUrl,
         form=form
     )
-@app.route('/delete_post/<int:id>', methods=['POST'])
-@login_required
-def delete_post(id):
 
-    post = Post.query.get_or_404(id)
-
-    db.session.delete(post)
-    db.session.commit()
-
-    flash("Post deleted successfully")
-
-    return redirect(url_for('home'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
