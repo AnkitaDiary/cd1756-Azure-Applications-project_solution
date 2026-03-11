@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+<!--{% extends "layout.html" %}
 
 {% block content %}
 <h1>{{ title }}</h1>
@@ -41,6 +41,66 @@
                 {% endfor %}
             </p>
         </div>
+    </div>
+</form>
+{% endblock %} -->
+
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<form action="" method="post" novalidate enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div class="row">
+
+        <!-- Left column: Title, Author, Body -->
+        <div class="col-sm-4">
+            <p>
+                {{ form.title.label }}<br>
+                {{ form.title(size=64) }}
+                {% for error in form.title.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.author.label }}<br>
+                {{ form.author(size=32) }}
+                {% for error in form.author.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.body.label }}<br>
+                {{ form.body(cols=70, rows=20) }}
+                {% for error in form.body.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>{{ form.submit() }}</p>
+        </div>
+
+        <!-- Right column: Image upload / preview -->
+        <div class="col-sm-4">
+            {% if article.image_filename %}
+                <p>Current Image:</p>
+                <img src="https://cmsimages345.blob.core.windows.net/images/{{ article.image_filename }}" 
+                     width="250" height="250" alt="Current Article Image"/>
+            {% endif %}
+
+            <p>
+                {{ form.image_path.label }}<br>
+                {{ form.image_path }}
+                {% for error in form.image_path.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+
     </div>
 </form>
 {% endblock %}
